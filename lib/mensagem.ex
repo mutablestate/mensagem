@@ -1,0 +1,2 @@
+defmodule Mensagem do
+end
