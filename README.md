@@ -2,8 +2,8 @@
 
 Elixir command line app that prints out various kinds of messages.
 
-At the moment, it just prints out random quotes, like the Unix fortune app,
-but in the future, it will also be used to print out reminders.
+At the moment, it prints out random quotes, like the Unix fortune app,
+and reminders.
 
 ###Install
 
@@ -13,7 +13,7 @@ Download mensagem, change to the mensagem directory and run the following comman
 
 ###Use
 
-At the moment, mensagem (with no arguments) only prints out random quotes.
+At the moment, mensagem (with no arguments) prints out random quotes and reminders.
 
 ###Status
 

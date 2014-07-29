@@ -10,9 +10,4 @@ defmodule Mensagem.Quotes do
     lines = File.read!(quote_file) |> String.split("\n%\n", trim: true)
     length(lines) |> :random.uniform |> :lists.nth(lines)
   end
-
-  def fetch_remind() do
-    rem_path = Path.join(__DIR__, "Reminders.txt")
-    lines = File.read!(rem_path) |> String.split("\n", trim: true)
-  end
 end
