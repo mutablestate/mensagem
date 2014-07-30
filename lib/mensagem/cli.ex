@@ -12,11 +12,13 @@ defmodule Mensagem.CLI do
   end
 
   def parse_args(args) do
-    parse = OptionParser.parse(args, switches: [help: :boolean, quote: :boolean, remind: :boolean],
-                                    aliases: [h: :help, q: :quote, r: :remind])
+    parse = OptionParser.parse(args, switches: [help: :boolean, add: :boolean,
+                            quote: :boolean, remind: :boolean],
+                            aliases: [h: :help, a: :add, q: :quote, r: :remind])
 
     case parse do
       {[help: true], _, _} -> :help
+      {[add: true], [date, message], _} -> [:add, date, message]
       {[quote: true], _, _} -> :quote
       {[remind: true], _, _} -> :remind
       _ -> []
@@ -24,6 +26,8 @@ defmodule Mensagem.CLI do
   end
 
   def process([]), do: Quotes.fetch_quote <> "\n\n" <> Remind.fetch_remind |> print_message
+
+  def process([:add, date, message]), do: Remind.add_remind(date, message)
 
   def process(:quote), do: Quotes.fetch_quote |> print_message
 

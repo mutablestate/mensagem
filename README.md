@@ -13,11 +13,17 @@ Download mensagem, change to the mensagem directory and run the following comman
 
 ###Use
 
+Once you have built the script, it is treated like any other executable.
+On Linux, you can run it with `./mensagem`. On Windows, just type in `mensagem`.
+
 At the moment, mensagem (with no arguments) prints out random quotes and reminders.
+The `-q` option will just print out quotes and the `-r` option will just print
+out the reminders (the reminders functionality does not work yet -- please be
+patient for a few more days).
 
 ###Status
 
-Whatever the letter before alpha is :)
+Pre-pre-alpha.
 
 ####Author
 
