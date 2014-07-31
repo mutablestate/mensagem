@@ -5,6 +5,9 @@ Elixir command line app that prints out various kinds of messages.
 At the moment, it prints out random quotes, like the Unix fortune app,
 and reminders.
 
+In the future, I hope to make it easy for other users to extend it,
+so that they can print out any kind of message.
+
 ###Install
 
 Download mensagem, change to the mensagem directory and run the following command:

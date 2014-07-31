@@ -41,8 +41,13 @@ defmodule Mensagem.CLI do
 
       Options:
         -h, --help: Print a help message.
+        -a, --add: Add a reminder.
         -q, --quote: Print a random quote.
         -r, --remind: Print reminders.
+
+      Example command for adding a reminder:
+
+      mensagem -a 2014/10/12 "Feed the pet ant."
     """
     System.halt(0)
   end
