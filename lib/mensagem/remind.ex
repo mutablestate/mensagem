@@ -2,11 +2,11 @@ defmodule Mensagem.Remind do
   @moduledoc false
 
   def fetch_remind() do
-    rems = get_remfile
+    rems = get_remfile |> get_rem(greg_date)
 
     case rems do
-      [] -> "No reminders."
-      _ -> "Reminders for today.\n" <> get_rem(rems)
+      "" -> "No reminders.\n"
+      _ -> "Reminders for today.\n" <> rems
     end
   end
 
@@ -19,12 +19,12 @@ defmodule Mensagem.Remind do
 
   defp get_remfile() do
     rem_path = Path.join(__DIR__, "reminders.txt")
-    lines = File.read!(rem_path) |> String.split("\n", trim: true)
+    File.read!(rem_path) |> String.split("\n", trim: true)
   end
 
-  defp get_rem(rems) do
-    # Find relevant reminders, format them and then return
-    rems |> Enum.join("\n")
+  defp get_rem(rems, today) do
+    num_days = 0..3 |> Enum.map fn x -> to_string(today + x) end
+    rems |> Enum.filter(fn x -> String.starts_with?(x, num_days) end) |> Enum.join("\n")
   end
 
   defp greg_date(date \\ :erlang.date), do: date |> :calendar.date_to_gregorian_days
