@@ -1,5 +1,5 @@
 defmodule Mensagem.Remind do
-  @moduledoc false
+  use Jazz
 
   def fetch_remind() do
     rems = get_remfile
@@ -10,27 +10,26 @@ defmodule Mensagem.Remind do
     end
   end
 
-  def add_remind(date, message) do
-    greg = date |> String.split("/") |> rem_date |> to_string
-    rems = get_remfile ++ [greg <> "::" <> message] |> Enum.sort
-            |> Enum.drop_while(fn x -> split_to_int(x) < greg_date end)
-    rem_path = Path.join(__DIR__, "reminders.txt")
-    File.write!(rem_path, rems |> Enum.join("\n"))
+  def add_remind(date, reminder) do
+    greg = date |> String.split("/") |> rem_date
+    rems = Enum.into(get_remfile, [%{calendar: date, gregorian: greg, message: reminder}])
+    rem_path = Path.join(__DIR__, "reminders.json")
+    File.write!(rem_path, rems |> Enum.filter(fn x -> x.gregorian >= greg_date end) |> JSON.encode!)
   end
 
   defp get_remfile() do
-    rem_path = Path.join(__DIR__, "reminders.txt")
-    File.read!(rem_path) |> String.split("\n", trim: true)
+    rem_path = Path.join(__DIR__, "reminders.json")
+    File.read!(rem_path) |> JSON.decode!(keys: :atoms)
   end
 
   defp get_rem(rems, today) do
-    rems |> Enum.filter(fn x -> split_to_int(x) < today + 4
-          and split_to_int(x) >= today end) |> Enum.join("\n")
+    rems |> Enum.filter(fn x ->
+      x.gregorian < today + 4 and x.gregorian >= today end)
+      |> Enum.map(fn y -> y.calendar <> " " <> y.message end)
+      |> Enum.join("\n")
   end
 
   defp greg_date(date \\ :erlang.date), do: date |> :calendar.date_to_gregorian_days
-
-  defp cal_date(greg), do: greg |> :calendar.gregorian_days_to_date
 
   defp rem_date(date) do
     case date do
@@ -38,8 +37,6 @@ defmodule Mensagem.Remind do
       _ -> greg_date
     end
   end
-
-  defp split_to_int(line), do: String.split(line, "::") |> hd |> String.to_integer
 
   defp to_int(number), do: String.to_integer number
 

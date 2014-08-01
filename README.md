@@ -17,16 +17,23 @@ Download mensagem, change to the mensagem directory and run the following comman
 ###Use
 
 Once you have built the script, it is treated like any other executable.
-On Linux, you can run it with `./mensagem`. On Windows, just type in `mensagem`.
+On Linux and Mac OS, you can run it with `./mensagem`. On Windows,
+you need to type `escript mensagem`.
 
 At the moment, mensagem (with no arguments) prints out random quotes and reminders.
 The `-q` option will just print out quotes and the `-r` option will just print
-out the reminders (the reminders functionality does not work yet -- please be
-patient for a few more days).
+out the reminders.
+
+To add reminders, use the -a option, as in the example below:
+
+    mensagem -a 2014/10/12 "Greet the wife."
+
+At the moment, the date needs to be formatted Year/Month/Day
+and the year must be written with four digits.
 
 ###Status
 
-Pre-pre-alpha.
+Pre-alpha.
 
 ####Author
 
