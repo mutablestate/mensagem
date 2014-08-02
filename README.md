@@ -10,8 +10,9 @@ so that they can print out any kind of message.
 
 ###Install
 
-Download mensagem, change to the mensagem directory and run the following command:
+Download mensagem, change to the mensagem directory and run the following commands:
 
+    mix deps.get
     mix escript.build
 
 ###Use
@@ -24,12 +25,21 @@ At the moment, mensagem (with no arguments) prints out random quotes and reminde
 The `-q` option will just print out quotes and the `-r` option will just print
 out the reminders.
 
+The quotes are stored in the `lib/mensagem/quotes` directory. These are text files
+which are formatted just like the text files that the fortune program uses.
+So if you install `fortune-mod`, or `fortune`, you can copy the text files in the
+package to the `quotes` directory and Mensagem will be able to read them.
+
 To add reminders, use the -a option, as in the example below:
 
-    mensagem -a 2014/10/12 "Greet the wife."
+    mensagem -a 10/12 "Feed the pet tiger."
 
-At the moment, the date needs to be formatted Year/Month/Day
-and the year must be written with four digits.
+    mensagem -a 2016/7/12 "Greet the wife."
+
+The date needs to be formatted either Month/Day or Year/Month/Day.
+If you write just the month and the date, Mensagem will assume that the reminder
+is for this year, or next year if the date is already passed.
+If you write the year, the year must be written with four digits.
 
 ###Status
 
