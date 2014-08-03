@@ -1,46 +1,49 @@
 defmodule Mensagem.Remind do
   use Jazz
 
+  rem_path = Path.join(__DIR__, "reminders.json")
+
   def fetch_remind() do
     rems = get_remfile
-
     case rems do
       [] -> "No reminders.\n"
-      _ -> "Reminders for today.\n" <> get_rem(rems, greg_date)
+      _ -> get_remind(rems, greg_date)
     end
   end
 
   def add_remind(date, text, diff \\ 3) do
     {year, month, day, greg} = date |> rem_date
-    rem_path = Path.join(__DIR__, "reminders.json")
-    File.write!(rem_path, Enum.into(get_remfile,
+    File.write!(unquote(rem_path), Enum.into(get_remfile,
       [%{year: year, month: month, day: day, offset: diff, num_days: greg, message: text}])
-      |> Enum.filter(fn x -> x.num_days >= greg_date end) |> JSON.encode!)
+      |> Enum.filter(&(&1.num_days >= greg_date)) |> JSON.encode!)
   end
 
   defp get_remfile() do
-    rem_path = Path.join(__DIR__, "reminders.json")
-    File.read!(rem_path) |> JSON.decode!(keys: :atoms)
+    File.read!(unquote(rem_path)) |> JSON.decode!(keys: :atoms)
   end
 
-  defp get_rem(rems, today) do
-    rems |> Enum.filter(fn x ->
-      x.num_days < today + x.offset and x.num_days >= today end)
-      |> Enum.map(fn y -> y.day <> " " <> y.month <> " " <> y.message end)
+  defp get_remind(rems, today) do
+    rem_message = rems
+      |> Enum.filter(&(&1.num_days < today + &1.offset and &1.num_days >= today))
+      |> Enum.map(&(&1.day <> " " <> &1.month <> " " <> &1.message))
       |> Enum.sort |> Enum.join("\n")
-  end
-
-  defp format_text() do
+    case rem_message do
+      "" -> "No reminders.\n"
+      _ -> "Reminders for today.\n" <> rem_message
+    end
   end
 
   defp rem_date(date) do
     dt = {year, month, day} = date |> parse_date
-    if dt |> greg_date < greg_date, do: yr = year + 1, else: yr = year
-    greg = {yr, month, day} |> greg_date
+    if dt |> greg_date < greg_date, do: year = year + 1
+    greg = {year, month, day} |> greg_date
     month_names = %{1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun",
     7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec"}
-    mn = month_names[month]
-    {yr, mn, to_string(day), greg}
+    month = month_names[month]
+    {year, month, to_string(day), greg}
+  end
+
+  defp fmt_date(date) do
   end
 
   defp parse_date(date) do
