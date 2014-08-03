@@ -18,7 +18,9 @@ defmodule Mensagem.CLI do
 
     case parse do
       {[help: true], _, _} -> :help
+      {[add: true], [date, message, offset], _} -> [:add, date, message, offset]
       {[add: true], [date, message], _} -> [:add, date, message]
+      {[add: true], _, _} -> :help
       {[quotes: true], _, _} -> :quotes
       {[remind: true], _, _} -> :remind
       _ -> []
@@ -27,13 +29,17 @@ defmodule Mensagem.CLI do
 
   def process([]), do: Quotes.fetch_quotes <> "\n\n" <> Remind.fetch_remind |> print_message
 
+  def process([:add, date, message, offset]), do: Remind.add_remind(date, message, String.to_integer(offset))
+
   def process([:add, date, message]), do: Remind.add_remind(date, message)
 
   def process(:quotes), do: Quotes.fetch_quotes |> print_message
 
   def process(:remind), do: Remind.fetch_remind |> print_message
 
-  def process(:help) do
+  def process(:help), do: print_usage
+
+  def print_usage() do
     IO.puts """
       Usage: mensagem
 
@@ -52,6 +58,13 @@ defmodule Mensagem.CLI do
       If the reminder is for more than one year in the future:
 
       mensagem -a 2016/3/4 "Greet the wife."
+
+      If you want the reminders shown before the date specified,
+      add the number of days after the message:
+
+      mensagem -a 11/14 "If the weather's OK, start the revolution" 4
+
+      This message will be shown from 4 days before 14 Nov.
     """
     System.halt(0)
   end

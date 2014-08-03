@@ -3,7 +3,7 @@ defmodule Mensagem.Mixfile do
 
   def project do
     [app: :mensagem,
-    version: "0.0.1",
+    version: "0.0.2",
     elixir: "~> 0.14.3",
     escript: escript,
     deps: deps]

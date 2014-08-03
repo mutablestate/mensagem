@@ -30,16 +30,21 @@ which are formatted just like the text files that the fortune program uses.
 So if you install `fortune-mod`, or `fortune`, you can copy the text files in the
 package to the `quotes` directory and Mensagem will be able to read them.
 
-To add reminders, use the -a option, as in the example below:
+To add reminders, use the -a option, as in the examples below:
 
     mensagem -a 10/12 "Feed the pet tiger."
 
     mensagem -a 2016/7/12 "Greet the wife."
 
+    mensagem -a 9/12 "Go to work." 3
+
 The date needs to be formatted either Month/Day or Year/Month/Day.
 If you write just the month and the date, Mensagem will assume that the reminder
 is for this year, or next year if the date is already passed.
 If you write the year, the year must be written with four digits.
+
+In the last example above, the number 3 indicates that mensagem should start
+showing this message three days in advance -- from 9 Sep to 12 Sep.
 
 ###Status
 

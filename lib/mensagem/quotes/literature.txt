@@ -42,11 +42,6 @@ nothing.  It was here first.
 Extreme fear can neither fight nor fly.
 		-- William Shakespeare, "The Rape of Lucrece"
 %
-F.S. Fitzgerald to Hemingway:
-	"Ernest, the rich are different from us."
-Hemingway:
-	"Yes.  They have more money."
-%
 Fame is a vapor; popularity an accident; the only earthly certainty is
 oblivion.
 		-- Mark Twain
@@ -71,10 +66,6 @@ Soap and education are not as sudden as a massacre, but they are more
 deadly in the long run.
 		-- Mark Twain
 %
-Sometimes I wonder if I'm in my right mind.  Then it passes off and I'm
-as intelligent as ever.
-		-- Samuel Beckett, "Endgame"
-%
 They'll never see. Nor know. Nor miss me. And it's old and old it's sad and
 old it's sad and weary I go back to you, my cold father, my cold mad father,
 my cold mad feary father, till the near sight of the mere size of him, the moyles
@@ -86,24 +77,14 @@ The devil can cite Scripture for his purpose.
 		-- William Shakespeare, "The Merchant of Venice"
 %
 The first thing we do, let's kill all the lawyers.
-		-- Wm. Shakespeare, "Henry VI", Part IV
+		-- William Shakespeare, "Henry VI", Part IV
 %
 The human race has one really effective weapon, and that is laughter.
 		-- Mark Twain
 %
-The last thing one knows in constructing a work is what to put first.
-		-- Blaise Pascal
-%
 The man who sets out to carry a cat by its tail learns something that
 will always be useful and which never will grow dim or doubtful.
 		-- Mark Twain
-%
-	The Priest's grey nimbus in a niche where he dressed discreetly.
-I will not sleep here tonight. Home also I cannot go.
-	A voice, sweetened and sustained, called to him from the sea.
-Turning the curve he waved his hand.  A sleek brown head, a seal's, far
-out on the water, round.  Usurper.
-		-- James Joyce, "Ulysses"
 %
 The secret source of humor is not joy but sorrow; there is no humor in Heaven.
 		-- Mark Twain
@@ -117,9 +98,6 @@ When in doubt, tell the truth.
 %
 When one burns one's bridges, what a very nice fire it makes.
 		-- Dylan Thomas
-%
-When you are about to die, a wombat is better than no company at all.
-		-- Roger Zelazny, "Doorways in the Sand"
 %
 Whenever you find that you are on the side of the majority, it is time
 to reform.
