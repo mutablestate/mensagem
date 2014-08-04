@@ -3,7 +3,9 @@ defmodule Mensagem.Remind do
 
   alias Mensagem.CLI
 
-  rem_path = Path.join(__DIR__, "reminders.json")
+  @rem_path Path.join(__DIR__, "reminders.json")
+  @months %{1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun",
+  7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec"}
 
   def fetch_remind() do
     rems = get_remfile
@@ -15,13 +17,13 @@ defmodule Mensagem.Remind do
 
   def add_remind(date, text, diff \\ 0) do
     {year, month, day, greg} = date |> rem_date
-    File.write!(unquote(rem_path), Enum.into(get_remfile,
+    File.write!(@rem_path, Enum.into(get_remfile,
       [%{year: year, month: month, day: day, offset: diff, num_days: greg, message: text}])
       |> Enum.filter(&(&1.num_days >= greg_date)) |> JSON.encode!)
   end
 
   defp get_remfile() do
-    File.read!(unquote(rem_path)) |> JSON.decode!(keys: :atoms)
+    File.read!(@rem_path) |> JSON.decode!(keys: :atoms)
   end
 
   defp get_remind(rems, today) do
@@ -36,15 +38,10 @@ defmodule Mensagem.Remind do
   end
 
   defp rem_date(date) do
-    dt = {year, month, day} = date |> parse_date
+    dt = {year, month_num, day} = date |> parse_date
     if dt |> greg_date < greg_date, do: year = year + 1
-    greg = {year, month, day} |> greg_date
-    {year, month |> fmt_month, to_string(day), greg}
-  end
-
-  defp fmt_month(num) do
-    %{1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun",
-    7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec"}[num]
+    greg = {year, month_num, day} |> greg_date
+    {year, @months[month_num], to_string(day), greg}
   end
 
   defp parse_date(date) do
