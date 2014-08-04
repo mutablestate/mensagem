@@ -10,7 +10,7 @@ defmodule Mensagem.Remind do
   def fetch_remind() do
     rems = get_remfile
     case rems do
-      [] -> "No reminders.\n"
+      [] -> "No reminders for #{fmt_today}.\n"
       _ -> get_remind(rems, greg_date)
     end
   end
@@ -32,8 +32,8 @@ defmodule Mensagem.Remind do
       |> Enum.map(&(&1.day <> " " <> &1.month <> ": " <> &1.message))
       |> Enum.sort |> Enum.join("\n")
     case rem_message do
-      "" -> "No reminders.\n"
-      _ -> "Reminders for today.\n" <> rem_message
+      "" -> "No reminders for #{fmt_today}.\n"
+      _ -> "Reminders for #{fmt_today}.\n" <> rem_message
     end
   end
 
@@ -54,6 +54,11 @@ defmodule Mensagem.Remind do
   end
 
   defp greg_date(date \\ :erlang.date), do: date |> :calendar.date_to_gregorian_days
+
+  defp fmt_today() do
+    {_, month_num, day} = :erlang.date
+    to_string(day) <> " " <> @months[month_num]
+  end
 
   defp to_int(number), do: String.to_integer number
 

@@ -3,8 +3,8 @@ defmodule Mensagem.Mixfile do
 
   def project do
     [app: :mensagem,
-    version: "0.0.2",
-    elixir: "~> 0.14.3",
+    version: "0.0.3",
+    elixir: "~> 0.15.0",
     escript: escript,
     deps: deps]
   end
@@ -14,6 +14,6 @@ defmodule Mensagem.Mixfile do
   end
 
   defp deps do
-    [{:jazz, "~> 0.1.2"}]
+    [{:jazz, "0.2.0"}]
   end
 end
