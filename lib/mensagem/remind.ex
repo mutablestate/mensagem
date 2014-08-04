@@ -29,8 +29,8 @@ defmodule Mensagem.Remind do
   defp get_remind(rems, today) do
     rem_message = rems
       |> Enum.filter(&(&1.num_days <= today + &1.offset and &1.num_days >= today))
-      |> Enum.map(&(&1.day <> " " <> &1.month <> ": " <> &1.message))
-      |> Enum.sort |> Enum.join("\n")
+      |> Enum.sort(&(&1.num_days < &2.num_days))
+      |> Enum.map(&(fmt_date(&1.num_days, today) <> &1.message)) |> Enum.join("\n")
     case rem_message do
       "" -> "No reminders for #{fmt_today}.\n"
       _ -> "Reminders for #{fmt_today}.\n" <> rem_message
@@ -54,6 +54,15 @@ defmodule Mensagem.Remind do
   end
 
   defp greg_date(date \\ :erlang.date), do: date |> :calendar.date_to_gregorian_days
+
+  defp fmt_date(num_days, today) do
+    diff = num_days - today
+    case diff do
+      0 -> "Today: "
+      1 -> "Tomorrow: "
+      _ -> "In #{diff} days' time: "
+    end
+  end
 
   defp fmt_today() do
     {_, month_num, day} = :erlang.date
