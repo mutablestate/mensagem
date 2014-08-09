@@ -15,15 +15,15 @@ defmodule Mensagem.Remind do
     end
   end
 
-  def add_remind(date, text, diff \\ 0) do
+  def add_remind(date, text, diff \\ 0, rem_dir \\ @rem_path) do
     {year, month, day, greg} = date |> rem_date
-    File.write!(@rem_path, Enum.into(get_remfile,
+    File.write!(rem_dir, Enum.into(get_remfile,
       [%{year: year, month: month, day: day, offset: diff, num_days: greg, message: text}])
       |> Enum.filter(&(&1.num_days >= greg_date)) |> JSON.encode!)
   end
 
-  defp get_remfile() do
-    File.read!(@rem_path) |> JSON.decode!(keys: :atoms)
+  defp get_remfile(rem_dir \\ @rem_path) do
+    File.read!(rem_dir) |> JSON.decode!(keys: :atoms)
   end
 
   defp get_remind(rems, today) do
