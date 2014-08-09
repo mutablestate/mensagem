@@ -7,13 +7,7 @@ defmodule Mensagem.Remind do
   @months %{1 => "Jan", 2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May", 6 => "Jun",
   7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec"}
 
-  def fetch_remind() do
-    rems = get_remfile
-    case rems do
-      [] -> "No reminders for #{fmt_today}.\n"
-      _ -> get_remind(rems, greg_date)
-    end
-  end
+  def fetch_remind(), do: get_remind(get_remfile)
 
   def add_remind(date, text, diff \\ 0, rem_dir \\ @rem_path) do
     {year, month, day, greg} = date |> rem_date
@@ -26,16 +20,18 @@ defmodule Mensagem.Remind do
     File.read!(rem_dir) |> JSON.decode!(keys: :atoms)
   end
 
-  defp get_remind(rems, today) do
-    rem_message = rems
-      |> Enum.filter(&(&1.num_days <= today + &1.offset and &1.num_days >= today))
-      |> Enum.sort(&(&1.num_days < &2.num_days))
-      |> Enum.map(&(fmt_date(&1.num_days, today) <> &1.message)) |> Enum.join("\n")
-    case rem_message do
-      "" -> "No reminders for #{fmt_today}.\n"
-      _ -> "Reminders for #{fmt_today}.\n" <> rem_message
-    end
+  defp get_remind([]), do: "No reminders for #{fmt_today}.\n"
+
+  defp get_remind(rems, date \\ greg_date) do
+    rems |> Enum.filter(&(&1.num_days <= date + &1.offset and &1.num_days >= date))
+    |> Enum.sort(&(&1.num_days < &2.num_days))
+    |> Enum.map(&(fmt_date(&1.num_days, date) <> &1.message)) |> Enum.join("\n")
+    |> print_rems
   end
+
+  defp print_rems(""), do: "No reminders for #{fmt_today}.\n"
+
+  defp print_rems(reminders), do: "Reminders for #{fmt_today}.\n" <> reminders
 
   defp rem_date(date) do
     dt = {year, month_num, day} = date |> parse_date
